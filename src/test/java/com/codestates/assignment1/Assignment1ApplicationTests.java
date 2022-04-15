@@ -20,11 +20,15 @@ class Assignment1ApplicationTests {
     // 결과값 : "Blenders", "Old", "Johnnie", "Pride", "Monk", "Walker"
     @Test
     void concat_Order() {
+        
+        // 시퀀스를 생성하는 가장 쉬운 방법은 Flux.just()
+        // Mono.just(null)은 안됨. NullPointerException -> Mono.empty() / 값이 있을 수도 있고 없을 수도 있는 Mono를 생성 justOrEmpty() 
         Flux<String> stringFlux1 = Flux.just("Blenders", "Old", "Johnnie")
                 .delayElements(Duration.ofSeconds(1));
         Flux <String> stringFlux2 = Flux.just("Pride", "Monk", "Walker")
                 .delayElements(Duration.ofSeconds(1));
-
+        
+        //Flux.concat: 첫번째 인자로 들어온 Publisher의 발행이 종료될 때까지 데이터를 전달한 후, 다음 인자의 Publisher를 전달
         Flux <String> concatString = Flux.concat(stringFlux1, stringFlux2)
                 .log();
 
@@ -38,9 +42,10 @@ class Assignment1ApplicationTests {
     // 2, 4, 6 .... 100
     @Test
     void even_Print(){
-
+        // Flux.range() 메서드를 사용하면 순차적으로 증가하는 Integer를 생성하는 Flux를 생성
         Flux <Integer> evenFlux = Flux.range(1,100)
                 .filter(i -> i%2 == 0)
+                // 한개의 시퀀스가 전달 될 때마다 doOnNext가 발생되며, 어떤 이벤트가 발생될 지 지정함(짝수 I 출력).
                 .doOnNext(i -> System.out.println(i))
                 .log();
 
@@ -56,6 +61,7 @@ class Assignment1ApplicationTests {
 
         Flux <String> pubString = Flux.just("hello","there")
                 .delayElements(Duration.ofSeconds(1))
+                // publishOn() 메서드를 이용하면 next, complete, error신호를 별도 쓰레드로 처리, parameter로 스케줄러와 prefetch(미리 가져올 데이터 수)를 받을 수 있음.  
                 .publishOn(Schedulers.boundedElastic())
                 .log();
 
@@ -105,7 +111,8 @@ class Assignment1ApplicationTests {
         Flux <String> stringFlux = Flux.just("google", "abc", "fb", "stackoverflow")
                 .delayElements(Duration.ofSeconds(1))
                 .filter(s -> s.length()>=5)
-                .publishOn(Schedulers.newElastic())
+                // 비동기로 신호 처리 대문자 치환, repeat() 
+                .publishOn(Schedulers.boundedElastic())
                 .flatMap(s -> Mono.just(s.toUpperCase()))
                 .repeat(1)
                 .log();
