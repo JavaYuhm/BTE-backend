@@ -105,6 +105,7 @@ class Assignment1ApplicationTests {
         Flux <String> stringFlux = Flux.just("google", "abc", "fb", "stackoverflow")
                 .delayElements(Duration.ofSeconds(1))
                 .filter(s -> s.length()>=5)
+                .publishOn(Schedulers.newElastic())
                 .flatMap(s -> Mono.just(s.toUpperCase()))
                 .repeat(1)
                 .log();
