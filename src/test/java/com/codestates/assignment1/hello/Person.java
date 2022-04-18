@@ -1,4 +1,4 @@
-package com.codestates.assignment1;
+package com.codestates.assignment1.hello;
 
 public class Person {
     String name;
