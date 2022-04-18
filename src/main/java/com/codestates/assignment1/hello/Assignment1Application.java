@@ -9,9 +9,7 @@ public class Assignment1Application {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(Assignment1Application.class, args);
-        RestWebFluxClient restWebFluxClient = context.getBean(RestWebFluxClient.class);
-        // We need to block for the content here or the JVM might exit before the message is logged
-        System.out.println(">> message = " + restWebFluxClient.getMessage());
+
     }
 }
 

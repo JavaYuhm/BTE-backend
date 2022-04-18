@@ -10,7 +10,11 @@ import reactor.core.publisher.Mono;
 @Component
 public class RestWebFluxHandler {
     public Mono<ServerResponse> hello(ServerRequest request) {
+
+        String name = request.queryParam("name").get();
+        RestWebFlux greeting = new RestWebFlux(name, "hello! " + name);
+
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue(new RestWebFlux("Hyeonmo")));
+                .body(BodyInserters.fromValue(greeting));
     }
 }

@@ -1,28 +1,30 @@
 package com.codestates.assignment1.hello;
 
 public class RestWebFlux {
-    String name;
+    private String to;
+    private String message;
 
-    public RestWebFlux(){
-
+    public RestWebFlux() {
     }
 
-    public RestWebFlux(String name){
-        this.name = name;
+    public RestWebFlux(String to, String message) {
+        this.to = to;
+        this.message = message;
     }
 
-    public String getName(){
-        return this.getName();
+    public String getTo(){
+        return this.to;
     }
 
-    public void setName(String name){
-        this.name = name;
+    public String getMessage() {
+        return this.message;
     }
 
-    @Override
-    public String toString(){
-        return "{" +
-                "name : " + name + "Hello :" + name +
-                "}";
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setTo(String to){
+        this.to = to;
     }
 }
