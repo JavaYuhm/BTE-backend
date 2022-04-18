@@ -1,5 +1,9 @@
 package com.codestates.assignment1.hello;
 
+/*
+Lombok Constractor, Getter, Setter 설정이 제대로 안먹어, 수기로 생성함.
+원인 파악 필요
+*/
 public class Person {
     String name;
     String email;
