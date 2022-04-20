@@ -5,18 +5,21 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.Map;
+
 @Component
 public class RestWebFluxClient {
 
     private final WebClient client;
     public RestWebFluxClient(WebClient.Builder builder) {
-        this.client = builder.baseUrl("http://localhost:8080").build();
+        this.client = builder.baseUrl("http://localhost:5555").build();
     }
 
-    public Mono<String> getMessage() {
-        return this.client.get().uri("/hello").accept(MediaType.APPLICATION_JSON)
+    public Mono<RestWebFlux> getUserJobInfo(String name) {
+        System.out.println("client 실행");
+        return this.client.get().uri("/userJobInfo?name="+name).accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(RestWebFlux.class)
-                .map(RestWebFlux::getMessage);
+                .bodyToMono(RestWebFlux.class);
+
     }
 }
